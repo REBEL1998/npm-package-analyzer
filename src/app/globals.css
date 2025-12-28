@@ -20,7 +20,339 @@
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== CUSTOM SCROLLBAR - GREY SQUARE DESIGN ===== */
+
+/* Remove scrollbar arrows */
+::-webkit-scrollbar-button {
+  display: none !important;
+}
+
+/* Webkit Browsers (Chrome, Safari, Edge) - Full Page */
+::-webkit-scrollbar {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5 !important;
+  border-radius: 0px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a0a0a0 !important;
+  border-radius: 0px !important;
+  border: none !important;
+  box-shadow: none !important;
+  transition: all 0.3s ease !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #707070 !important;
+  transition: all 0.3s ease !important;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #505050 !important;
+}
+
+::-webkit-scrollbar-corner {
+  background: #f5f5f5 !important;
+}
+
+/* Textarea Specific - SQUARE DESIGN */
+textarea::-webkit-scrollbar {
+  width: 14px !important;
+}
+
+textarea::-webkit-scrollbar-button {
+  display: none !important;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: #ececec !important;
+  border-radius: 0px !important;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: #999999 !important;
+  border-radius: 0px !important;
+  border: none !important;
+  min-height: 40px !important;
+  transition: background 0.3s ease, transform 0.2s ease !important;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background: #666666 !important;
+}
+
+textarea::-webkit-scrollbar-thumb:active {
+  background: #444444 !important;
+}
+
+/* All scrollable elements */
+*::-webkit-scrollbar {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+*::-webkit-scrollbar-button {
+  display: none !important;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f5f5f5 !important;
+  border-radius: 0px !important;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #a0a0a0 !important;
+  border-radius: 0px !important;
+  border: none !important;
+  min-height: 40px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #707070 !important;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: #505050 !important;
+}
+
+/* Firefox - Modern scrollbar appearance */
+html {
+  scrollbar-color: #a0a0a0 #f5f5f5 !important;
+  scrollbar-width: thin !important;
+  scroll-behavior: smooth !important;
+}
+
+* {
+  scrollbar-color: #a0a0a0 #f5f5f5 !important;
+  scrollbar-width: thin !important;
+}
+
+textarea {
+  scrollbar-color: #999999 #ececec !important;
+}
+
+/* Smooth scrolling for entire page */
+html,
+body {
+  scroll-behavior: smooth !important;
+}
+
+/* Smooth scroll animation */
+@keyframes smoothScroll {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Apply smooth animation to scrollable elements */
+::-webkit-scrollbar-thumb {
+  animation: smoothScroll 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+/* Smooth scroll transition for page */
+html {
+  scroll-padding-top: 0;
+  scroll-padding-bottom: 0;
+}
+
+/* Easing function for smooth scroll */
+body {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar-thumb {
+  animation: scrollbarPulse 2s ease-in-out infinite;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  animation: none;
+}
+
+/* ===== LANDING PAGE ANIMATIONS ===== */
+
+/* Gradient animation for text */
+@keyframes gradient-x {
+
+  0%,
+  100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+/* Fade in with delay */
+.animate-fade-in-delay {
+  animation: fade-in 0.8s ease-out 0.3s both;
+}
+
+/* Slide down */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.6s ease-out 0.2s both;
+}
+
+/* Slide up */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out 0.4s both;
+}
+
+/* Subtle bounce for button */
+@keyframes bounce-subtle {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s ease-in-out infinite;
+}
+
+.animate-bounce-subtle:hover {
+  animation: none;
+}
+
+/* Cursor trail fade animation */
+@keyframes trail-fade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5) translateY(-20px);
+  }
+}
+
+.animate-trail-fade {
+  animation: trail-fade 0.8s ease-out forwards;
+}
+
+/* NEW ANIMATIONS - No opacity fade, always visible */
+
+/* Shimmer gradient animation for title */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Scale in animation - starts visible, scales from 0.95 to 1 */
+@keyframes scale-in {
+  0% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Slide in from left - stays visible, just transforms */
+@keyframes slide-in-fast {
+  0% {
+    transform: translateX(-20px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-fast {
+  animation: slide-in-fast 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Slide in with delay 1 */
+.animate-slide-in-delay {
+  animation: slide-in-fast 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+  transform: translateX(-20px);
+}
+
+/* Slide in with delay 2 */
+.animate-slide-in-delay-2 {
+  animation: slide-in-fast 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards;
+  transform: translateX(-20px);
 }
