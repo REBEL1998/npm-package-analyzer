@@ -239,7 +239,6 @@ Connects to the official npm registry to fetch real-time package data. Uses batc
 
 **Developed by**: Parth Chudasama  
 **Version**: 1.0.0  
-**Status**: Production Ready
 
 ---
 
