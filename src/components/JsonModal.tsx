@@ -114,9 +114,45 @@ export default function JsonModal({ isOpen, onClose, onSubmit }: JsonModalProps)
           <div className="flex-1 overflow-y-auto p-4 sm:p-6">
             <div className="space-y-3 sm:space-y-4">
               <label className="block">
-                <span className="text-sm sm:text-base font-medium text-gray-700 mb-2 block">
-                  Paste your package.json file contents:
-                </span>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm sm:text-base font-medium text-gray-700 block">
+                    Paste your package.json file contents:
+                  </span>
+                  <button
+                    onClick={() => {
+                      if (textareaRef.current) {
+                        textareaRef.current.value = JSON.stringify({
+                          "name": "sample-project",
+                          "version": "1.0.0",
+                          "dependencies": {
+                            "react": "^16.8.0",
+                            "react-dom": "^16.8.0",
+                            "next": "10.0.0",
+                            "axios": "^0.19.0",
+                            "moment": "^2.24.0",
+                            "uuid": "^3.4.0"
+                          },
+                          "devDependencies": {
+                            "typescript": "^3.9.7",
+                            "eslint": "^7.0.0"
+                          }
+                        }, null, 2);
+                      }
+                    }}
+                    className="group relative inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-xs sm:text-sm font-semibold rounded-full shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
+                  >
+                    <span className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-in-out -skew-x-12 origin-left" />
+                    <svg
+                      className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-pulse"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <span>Auto-Fill Sample</span>
+                  </button>
+                </div>
                 <textarea
                   ref={textareaRef}
                   rows={12}

@@ -47,7 +47,7 @@ export default function Home() {
     currentPage === 'landing' ? (
       <NpmAnalyzerLanding onTryNow={handleTryNow} />
     ) : analysisResult?.success ? (
-      <div className="px-2">
+      <div className="">
         {/* Results */}
         <ResultsTable
           dependencies={analysisResult.dependencies}
@@ -56,7 +56,7 @@ export default function Home() {
         />
       </div>
     ) : (
-      <div className="bg-white rounded-lg sm:rounded-xl border border-red-200 p-3 sm:p-4 mx-2">
+      <div className="bg-white rounded-lg sm:rounded-xl border border-red-200 p-3 sm:p-4">
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
           <div className="flex-shrink-0">
             <svg
@@ -90,7 +90,7 @@ export default function Home() {
     )
   ) : (
     // Show minimal placeholder during hydration
-    <div className="flex flex-col items-center justify-center py-4 sm:py-6 px-2">
+    <div className="flex flex-col items-center justify-center py-4 sm:py-6">
       <div className="bg-white rounded-lg sm:rounded-2xl shadow-lg p-4 sm:p-6 md:p-8 max-w-full sm:max-w-md w-full" />
     </div>
   );
@@ -106,7 +106,7 @@ export default function Home() {
           <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
             {/* Full-Width Header */}
             <div className="w-full bg-white/80 backdrop-blur-sm shadow-md border-b border-gray-200/50">
-              <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+              <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 py-4 sm:py-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   {/* Title Section */}
                   <div>
@@ -158,7 +158,7 @@ export default function Home() {
             </div>
 
             {/* Content Container */}
-            <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
               {/* Separation Section */}
               <div className="relative py-6">
                 <div className="absolute inset-0 flex items-center" aria-hidden="true">
@@ -184,7 +184,7 @@ export default function Home() {
         <>
           {/* Modern Footer for Listing Page - Full Width */}
           <footer className="w-full bg-white/80 backdrop-blur-sm shadow-md border-t border-gray-200/50 mt-12">
-            <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8">
+            <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 py-6 sm:py-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Branding Section */}
                 <div className="text-center md:text-left">
