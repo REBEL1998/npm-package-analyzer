@@ -94,6 +94,10 @@ export async function POST(request: NextRequest): Promise<NextResponse<AnalysisR
         latestVersion,
         updateType,
         isDevDependency: dep.isDev,
+        description: packageInfo.description,
+        homepage: packageInfo.homepage,
+        license: packageInfo.license,
+        publishedDate: packageInfo.time ? packageInfo.time[latestVersion] : undefined,
       };
     });
 

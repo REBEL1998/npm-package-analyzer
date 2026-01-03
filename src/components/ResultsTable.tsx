@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Dependency } from '@/types';
 import { exportToCSV, exportToJSON } from '@/utils/exportData';
 
@@ -44,18 +44,59 @@ function getUpdateBadgeColor(
   }
 }
 
-function getUpdateSuggestion(
+function getSuggestionInfo(
   updateType: Dependency['updateType']
-): string {
+): {
+  label: string;
+  shortDesc: string;
+  icon: React.JSX.Element;
+  colorClass: string;
+} {
   switch (updateType) {
     case 'major':
-      return 'Review breaking changes before updating';
+      return {
+        label: 'Breaking Changes',
+        shortDesc: 'Review changelog',
+        icon: (
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        ),
+        colorClass: 'text-red-700 bg-red-50 border-red-200',
+      };
     case 'minor':
-      return 'Safe to update - new features included';
+      return {
+        label: 'New Features',
+        shortDesc: 'Safe update',
+        icon: (
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        ),
+        colorClass: 'text-amber-700 bg-amber-50 border-amber-200',
+      };
     case 'patch':
-      return 'Update recommended - bug fixes included';
+      return {
+        label: 'Bug Fixes',
+        shortDesc: 'Recommended',
+        icon: (
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        ),
+        colorClass: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+      };
     case 'up-to-date':
-      return 'Your package is current';
+      return {
+        label: 'Optimal',
+        shortDesc: 'Up to date',
+        icon: (
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        ),
+        colorClass: 'text-blue-700 bg-blue-50 border-blue-200',
+      };
   }
 }
 
@@ -433,7 +474,8 @@ export default function ResultsTable({
                 <tbody className="divide-y divide-gray-200">
                   {filteredAndSortedDependencies.map((dep) => {
                     const badgeColor = getUpdateBadgeColor(dep.updateType);
-                    const suggestion = getUpdateSuggestion(dep.updateType);
+                    const suggestionInfo = getSuggestionInfo(dep.updateType);
+                    const publishedDate = dep.publishedDate ? new Date(dep.publishedDate).toLocaleDateString() : '';
 
                     return (
                       <tr
@@ -441,19 +483,44 @@ export default function ResultsTable({
                         className="hover:bg-gray-50 transition-colors"
                       >
                         <td className="px-3 sm:px-6 py-3 sm:py-4">
-                          <div className="flex items-center gap-1 sm:gap-2">
-                            <a
-                              href={`https://www.npmjs.com/package/${dep.name}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="font-mono text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline break-all"
-                            >
-                              {dep.name}
-                            </a>
-                            {dep.isDevDependency && (
-                              <span className="inline-block px-1.5 sm:px-2 py-0.5 bg-gray-200 text-gray-700 text-xs rounded font-medium flex-shrink-0">
-                                dev
-                              </span>
+                          <div className="flex flex-col">
+                            <div className="flex items-center gap-1 sm:gap-2 flex-wrap">
+                              <a
+                                href={`https://www.npmjs.com/package/${dep.name}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-mono text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline break-all"
+                              >
+                                {dep.name}
+                              </a>
+                              {dep.isDevDependency && (
+                                <span className="inline-block px-1.5 sm:px-2 py-0.5 bg-gray-200 text-gray-700 text-xs rounded font-medium flex-shrink-0">
+                                  dev
+                                </span>
+                              )}
+                              {dep.license && (
+                                <span className="inline-block px-1.5 sm:px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] rounded border border-gray-200 flex-shrink-0">
+                                  {dep.license}
+                                </span>
+                              )}
+                            </div>
+                            {dep.description && (
+                              <p className="text-[11px] text-gray-500 mt-1 line-clamp-1 max-w-xs" title={dep.description}>
+                                {dep.description}
+                              </p>
+                            )}
+                            {dep.homepage && (
+                              <a
+                                href={dep.homepage}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[10px] text-blue-500 hover:underline mt-0.5 inline-flex items-center gap-1 w-fit"
+                              >
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                                Homepage
+                              </a>
                             )}
                           </div>
                           {dep.error && (
@@ -466,9 +533,16 @@ export default function ResultsTable({
                           </span>
                         </td>
                         <td className="px-3 sm:px-6 py-3 sm:py-4">
-                          <span className="font-mono text-xs sm:text-sm text-gray-700">
-                            {dep.latestVersion}
-                          </span>
+                          <div className="flex flex-col">
+                            <span className="font-mono text-xs sm:text-sm text-gray-700">
+                              {dep.latestVersion}
+                            </span>
+                            {publishedDate && (
+                              <span className="text-[10px] text-gray-400 mt-0.5">
+                                {publishedDate}
+                              </span>
+                            )}
+                          </div>
                         </td>
                         <td className="px-3 sm:px-6 py-3 sm:py-4">
                           <span
@@ -478,7 +552,15 @@ export default function ResultsTable({
                           </span>
                         </td>
                         <td className="px-3 sm:px-6 py-3 sm:py-4 hidden md:table-cell">
-                          <p className="text-xs sm:text-sm text-gray-600">{suggestion}</p>
+                          <div className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg border ${suggestionInfo.colorClass} w-fit`}>
+                            <div className="flex-shrink-0">
+                              {suggestionInfo.icon}
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-[11px] font-bold leading-none mb-0.5">{suggestionInfo.label}</span>
+                              <span className="text-[10px] opacity-90 leading-none">{suggestionInfo.shortDesc}</span>
+                            </div>
+                          </div>
                         </td>
                       </tr>
                     );
@@ -496,11 +578,27 @@ export default function ResultsTable({
                   </div>
                 ) : (
                   filteredAndSortedDependencies.map((dep) => {
-                    const suggestion = getUpdateSuggestion(dep.updateType);
+                    const suggestionInfo = getSuggestionInfo(dep.updateType);
                     return (
                       <div key={`${dep.name}-suggestion`} className="bg-gray-50 p-3 rounded-lg border border-gray-200">
-                        <p className="font-mono text-xs font-medium text-gray-900 mb-1">{dep.name}</p>
-                        <p className="text-xs text-gray-600">{suggestion}</p>
+                        <div className="flex justify-between items-start">
+                          <p className="font-mono text-xs font-medium text-gray-900 mb-1">{dep.name}</p>
+                          {dep.isDevDependency && (
+                            <span className="inline-block px-1.5 py-0.5 bg-gray-200 text-gray-700 text-[10px] rounded font-medium">dev</span>
+                          )}
+                        </div>
+                        {dep.description && (
+                          <p className="text-[11px] text-gray-500 mb-2 line-clamp-2">{dep.description}</p>
+                        )}
+                        <div className={`mt-2 flex items-center gap-2 px-2.5 py-1.5 rounded-lg border ${suggestionInfo.colorClass} w-full`}>
+                          <div className="flex-shrink-0">
+                            {suggestionInfo.icon}
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-[11px] font-bold leading-none mb-0.5">{suggestionInfo.label}</span>
+                            <span className="text-[10px] opacity-90 leading-none">{suggestionInfo.shortDesc}</span>
+                          </div>
+                        </div>
                       </div>
                     );
                   })

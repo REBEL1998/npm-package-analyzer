@@ -5,6 +5,10 @@ export interface Dependency {
   updateType: 'up-to-date' | 'patch' | 'minor' | 'major';
   isDevDependency: boolean;
   error?: string;
+  description?: string;
+  homepage?: string;
+  license?: string;
+  publishedDate?: string;
 }
 
 export interface AnalysisResult {
@@ -22,6 +26,12 @@ export interface PackageJsonInput {
 
 export interface NPMPackageInfo {
   name: string;
+  description?: string;
+  homepage?: string;
+  license?: string;
+  time?: {
+    [key: string]: string;
+  };
   'dist-tags': {
     latest: string;
   };
